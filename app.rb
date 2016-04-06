@@ -18,7 +18,8 @@ configure do
   (
   "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL UNIQUE,
   "created_at" DATETIME NOT NULL,
-  "name" TEXT NOT NULL,
+  "name_post" TEXT NOT NULL,
+  "name_author" TEXT NOT NULL,
   "content" TEXT NOT NULL 
   )'
 
@@ -27,6 +28,7 @@ configure do
   "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL UNIQUE,
   "created_at" DATETIME NOT NULL,
   "content" TEXT NOT NULL ,
+  "name_author" TEXT NOT NULL ,
   "fk_post" INTEGER NOT NULL
   )'
 
@@ -45,15 +47,18 @@ post '/new_post' do
   @posts = @db.execute 'select * from posts order by id desc'
   @post_name = params[:post_name]
   @post_text = params[:post_text]
+  @name_author = params[:name_author]
   get_db.execute 'INSERT INTO posts 
         (created_at, 
-        name, 
+        name_post,
+        name_author, 
         content) 
   VALUES
         (datetime(),
         ?,
-        ?)',[@post_name, @post_text]
-  erb :index
+        ?,
+        ?)',[@post_name, @name_author, @post_text]
+  redirect to("/")
 end
 
 get '/details/:id' do
@@ -68,13 +73,16 @@ end
 post '/details/:id' do
   post_id = params[:id]
   content = params[:comment_text]
+  name_author = params[:name_author]
   get_db.execute 'INSERT INTO comments 
       (created_at, 
-      content, 
+      content,
+      name_author,
       fk_post) 
   VALUES
       (datetime(),
+      ?,
       ?, 
-      ?)', [content, post_id]
+      ?)', [content, name_author, post_id]
   redirect to("/details/#{post_id}")
 end

@@ -1,11 +1,15 @@
 <h3>Post details</h3>
 <hr />
+<p>Author: <%= @row["name_author"] %></p>
 <p><b><%= @row["name"]%></b> added at <%= @row["created_at"] %></p>
 <p><%= @row["content"] %></p>
 <hr />
 <br />
 <h4>Comments:</h4>
 <form action="/details/<%= @row["id"]%>" method="post">
+	<div class="form-group">
+    <input type="text" name="name_author" class="form-control" id="input_name" placeholder="Type your nick here...">
+  </div>
   <div class="form-group">
     <textarea name="comment_text" class="form-control" id="text_post" placeholder="Type comments to here..."></textarea>
   </div>
@@ -15,6 +19,6 @@
 <br />
   <% @comments.each do |comment|%>
   <p><%= comment["content"] %></p>
-  <p><span style = "font-size: 75%; color: #999">added at <%= comment["created_at"] %></span></p>
+  <p><span style = "font-size: 75%; color: #999">added at <%= comment["created_at"] %> author:<%= comment["name_author"] %></span></p>
   <hr />
 <% end %>

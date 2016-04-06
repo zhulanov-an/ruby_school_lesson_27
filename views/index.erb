@@ -2,7 +2,8 @@
 <br />
 <hr />
 <% @posts.each do |post|%>
-  <p><b><%= post["name"]%></b> added at <%= post["created_at"] %></p>
+	<b><%= post["name"]%></b>
+  <p><span style="font-size: 70%; color:#999">added at <%= post["created_at"] %> author:<%= post["name_author"] %></span></p>
   <p><%= post["content"] %></p>
   <p><a href="/details/<%= post["id"] %>">Read comments...</a></p>
   <hr />
