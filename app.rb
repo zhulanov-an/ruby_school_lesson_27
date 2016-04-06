@@ -11,5 +11,5 @@ get '/posts' do
 end
 
 get '/new_post' do
-  erb "Hello World"
+  erb :new_post
 end
