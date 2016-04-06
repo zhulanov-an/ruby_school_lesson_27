@@ -1,5 +1,13 @@
 <h3>Post details</h3>
 <hr />
-  <p><b><%= @row["name"]%></b> added at <%= @row["created_at"] %></p>
-  <p><%= @row["content"] %></p>
-  <hr />
+<p><b><%= @row["name"]%></b> added at <%= @row["created_at"] %></p>
+<p><%= @row["content"] %></p>
+<hr />
+<br />
+<h4>Comments:</h4>
+<form action="/new_comment" method="post">
+  <div class="form-group">
+    <textarea name="post_text" class="form-control" id="text_post" placeholder="Type comments to here..."></textarea>
+  </div>
+  <button type="submit" class="btn btn-success">Send comment!</button>
+</form>
