@@ -42,5 +42,7 @@ end
 
 get '/details/:id' do
   id = params[:id]
-  erb "Hello World #{id}"
+  post = @db.execute 'select * from posts where id = ?', [id]
+  @row = post[0]
+  erb :details_post
 end
