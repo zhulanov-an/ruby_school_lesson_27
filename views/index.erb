@@ -4,5 +4,6 @@
 <% @posts.each do |post|%>
   <p><b><%= post["name"]%></b> added at <%= post["created_at"] %></p>
   <p><%= post["content"] %></p>
+  <p><a href="/post/<%= post["id"] %>">Read comments...</a></p>
   <hr />
 <% end %>
