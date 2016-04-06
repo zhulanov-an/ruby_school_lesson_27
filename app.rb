@@ -21,6 +21,15 @@ configure do
   "name" TEXT NOT NULL,
   "content" TEXT NOT NULL 
   )'
+
+  get_db.execute 'CREATE TABLE IF NOT EXISTS "comments"
+  (
+  "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL UNIQUE,
+  "created_at" DATETIME NOT NULL,
+  "content" TEXT NOT NULL ,
+  "fk_post" INTEGER NOT NULL
+  )'
+
 end
 
 get '/' do
@@ -44,6 +53,7 @@ get '/details/:id' do
   id = params[:id]
   post = @db.execute 'select * from posts where id = ?', [id]
   @row = post[0]
+  @comments = @db.execute 'select * from comments where fk_post = ? order by id desc', [id]
   erb :details_post
 end
 
@@ -51,5 +61,9 @@ end
 post '/details/:id' do
   post_id = params[:id]
   content = params[:comment_text]
-  erb "You entered comments #{content} for post num #{post_id}"
+  post = @db.execute 'select * from posts where id = ?', [post_id]
+  @row = post[0]
+  get_db.execute 'INSERT INTO comments (created_at, content, fk_post) VALUES(datetime(), ?, ?)',[content, post_id]
+  @comments = @db.execute 'select * from comments where fk_post = ? order by id desc', [post_id]
+  erb :details_post
 end
