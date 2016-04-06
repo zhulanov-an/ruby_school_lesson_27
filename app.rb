@@ -15,11 +15,12 @@ end
 
 configure do
   get_db.execute 'CREATE TABLE IF NOT EXISTS "posts"
-              (
-              "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,
-               "created_at" DATETIME NOT NULL , 
-               "content" TEXT NOT NULL 
-               )'
+  (
+  "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL UNIQUE,
+  "created_at" DATETIME NOT NULL,
+  "name" TEXT NOT NULL,
+  "content" TEXT NOT NULL 
+  )'
 end
 
 get '/' do
@@ -37,4 +38,6 @@ end
 post '/new' do
   @post_name = params[:post_name]
   @post_text = params[:post_text]
+  get_db.execute 'INSERT INTO posts (created_at, name, content) VALUES(datetime(), ?, ?)',[@post_name, @post_text]
+  erb :new_post
 end
