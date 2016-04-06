@@ -1,6 +1,17 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sqlite3'
+
+def get_db
+  db = SQLite3::Database.new './database/leprosorium.sqlite'
+  db.results_as_hash = true
+  db
+end
+
+before do
+  @db = get_db
+end
 
 get '/' do
   erb 'Hello'
@@ -17,5 +28,4 @@ end
 post '/new' do
   @post_name = params[:post_name]
   @post_text = params[:post_text]
-  erb "post #{@post_name} post_text #{@post_text}"
 end
