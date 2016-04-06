@@ -24,11 +24,11 @@ configure do
 end
 
 get '/' do
-  erb 'Hello'
+  erb :posts
 end
 
 get '/posts' do
-  erb "Hello World"
+  erb :posts
 end
 
 get '/new_post' do
