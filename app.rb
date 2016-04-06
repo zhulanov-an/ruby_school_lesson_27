@@ -29,6 +29,7 @@ get '/' do
 end
 
 get '/posts' do
+  @posts = @db.execute 'select * from posts order by id desc'
   erb :posts
 end
 
@@ -36,9 +37,10 @@ get '/new_post' do
   erb :new_post
 end
 
-post '/new' do
+post '/new_post' do
+  @posts = @db.execute 'select * from posts order by id desc'
   @post_name = params[:post_name]
   @post_text = params[:post_text]
   get_db.execute 'INSERT INTO posts (created_at, name, content) VALUES(datetime(), ?, ?)',[@post_name, @post_text]
-  erb :new_post
+  erb :index
 end
