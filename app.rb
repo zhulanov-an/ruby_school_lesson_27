@@ -13,6 +13,15 @@ before do
   @db = get_db
 end
 
+configure do
+  get_db.execute 'CREATE TABLE IF NOT EXISTS "posts"
+              (
+              "id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE ,
+               "created_at" DATETIME NOT NULL , 
+               "content" TEXT NOT NULL 
+               )'
+end
+
 get '/' do
   erb 'Hello'
 end
