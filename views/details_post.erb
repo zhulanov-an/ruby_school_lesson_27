@@ -11,3 +11,9 @@
   </div>
   <button type="submit" class="btn btn-success">Send comment!</button>
 </form>
+
+<br />
+  <% @comments.each do |comment|%>
+  <p><b><%= comment["content"] %></b> added at <%= comment["created_at"] %></p>
+  <hr />
+<% end %>
