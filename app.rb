@@ -46,3 +46,10 @@ get '/details/:id' do
   @row = post[0]
   erb :details_post
 end
+
+# details for comment
+post '/details/:id' do
+  post_id = params[:id]
+  content = params[:comment_text]
+  erb "You entered comments #{content} for post num #{post_id}"
+end
