@@ -45,7 +45,14 @@ post '/new_post' do
   @posts = @db.execute 'select * from posts order by id desc'
   @post_name = params[:post_name]
   @post_text = params[:post_text]
-  get_db.execute 'INSERT INTO posts (created_at, name, content) VALUES(datetime(), ?, ?)',[@post_name, @post_text]
+  get_db.execute 'INSERT INTO posts 
+        (created_at, 
+        name, 
+        content) 
+  VALUES
+        (datetime(),
+        ?,
+        ?)',[@post_name, @post_text]
   erb :index
 end
 
@@ -61,9 +68,13 @@ end
 post '/details/:id' do
   post_id = params[:id]
   content = params[:comment_text]
-  post = @db.execute 'select * from posts where id = ?', [post_id]
-  @row = post[0]
-  get_db.execute 'INSERT INTO comments (created_at, content, fk_post) VALUES(datetime(), ?, ?)',[content, post_id]
-  @comments = @db.execute 'select * from comments where fk_post = ? order by id desc', [post_id]
-  erb :details_post
+  get_db.execute 'INSERT INTO comments 
+      (created_at, 
+      content, 
+      fk_post) 
+  VALUES
+      (datetime(),
+      ?, 
+      ?)', [content, post_id]
+  redirect to("/details/#{post_id}")
 end
